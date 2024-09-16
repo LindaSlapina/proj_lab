@@ -1,1 +1,1 @@
-# proj_lab
+# Projektēšanas laboratorija
