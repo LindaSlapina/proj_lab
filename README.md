@@ -1,4 +1,14 @@
 # Projektēšanas laboratorija
+## Iztrādātāji
+
+- Jūlija Sokolova
+- Georgijs Jefimovs
+- Diana Sorokina
+- Linda Slapiņa
+- Vitalijs Vasiļjevs
+
+
+
 ## Ievads
 -  Problēmas nostādne : *Drukāšanas pasūtījumu izpildes plānošana*
 
