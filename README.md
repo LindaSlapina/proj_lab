@@ -50,12 +50,12 @@ Kavēšanās minimizācija: ja uzņēmums vispirms koncentrējas uz lieliem pas�
 
 ## Lietotāju stāsti
 
--Apmeklētājs vēlas pasūtīt druku tiešsaites veikalā, jo var ātri apskatīt kā izskatīsies druka un nav jāapmeklē klātienes tipogrāfija. 
--Birojs vēlas saņemt pasūtījumus tiešsaites veikalā, jo nav jāuztur administrators.
--Apmeklētāji vēlas saņemt pasūtījumu ar piegādi, lai nav jāapmeklē veikals. 
--Darbinieks vēlas strādāt pie vienas un tās pašas drukāšanas iekārtas, lai nevajadzētu apmācīties darboties ar katru iekārtu.
--Tipogrāfija vēlas pasūtīt materiālus lielos apjomos, lai gala cena būtu lētāka. 
--Tipogrāfija vēlās zināt un paredzēt nepieciešamos materiālu daudzumus, lai pasūtītu pietiekami daudz materiālu nākamiem pasūtījumiem.
+- Apmeklētājs vēlas pasūtīt druku tiešsaites veikalā, jo var ātri apskatīt kā izskatīsies druka un nav jāapmeklē klātienes tipogrāfija. 
+- Birojs vēlas saņemt pasūtījumus tiešsaites veikalā, jo nav jāuztur administrators.
+- Apmeklētāji vēlas saņemt pasūtījumu ar piegādi, lai nav jāapmeklē veikals. 
+- Darbinieks vēlas strādāt pie vienas un tās pašas drukāšanas iekārtas, lai nevajadzētu apmācīties darboties ar katru iekārtu.
+- Tipogrāfija vēlas pasūtīt materiālus lielos apjomos, lai gala cena būtu lētāka. 
+- Tipogrāfija vēlās zināt un paredzēt nepieciešamos materiālu daudzumus, lai pasūtītu pietiekami daudz materiālu nākamiem pasūtījumiem.
 
 
 
