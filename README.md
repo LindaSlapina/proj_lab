@@ -48,5 +48,10 @@ Kavﾄ毒｡anﾄ《 minimizﾄ…ija: ja uzﾅ�ﾄ杜ums vispirms koncentrﾄ屠as uz lieliem pasﾅ
 
 
 
+## Lietotﾄ）u stﾄ《ti
+
+
+## Konceptu modelis
+
 
 
