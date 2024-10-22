@@ -66,3 +66,23 @@ Kavēšanās minimizācija: ja uzņēmums vispirms koncentrējas uz lieliem pas�
 
 ![](KONCEPTU_MODELIS2.png)
 
+## Tehnoloģiju steks
+
+| SERVERA PUSE: Tipogrāfija |      
+|--------------------|
+|Satvars: Flask|
+|Programmēšanas valoda: Python|
+|Datu bāze: SQLalchemy|
+|Tīmekļa serveris: Nginx|
+|OS: Ubuntu|
+|Virtualizācija: VMware|
+
+| KLIENTA PUSE: Tipogrāfija | 
+|--------------------|
+|JavaScript|
+|CSS|
+|HTML|
+|Pārlūks|
+
+
+
