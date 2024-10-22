@@ -64,5 +64,5 @@ Kavēšanās minimizācija: ja uzņēmums vispirms koncentrējas uz lieliem pas�
 
 ## Konceptu modelis
 
-![](konceptu_modelis.png)
+![](KONCEPTU_MODELIS2.png)
 
