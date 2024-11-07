@@ -87,3 +87,36 @@ Kavēšanās minimizācija: ja uzņēmums vispirms koncentrējas uz lieliem pas�
 
 ## Blokshēma 
 ![](blokshema.png)
+
+
+## Pseidokods
+
+BEGIN MAIN_PROGRAM 
+
+    MATERIALA_PARB1
+    IF MATERIALS == EXIST THEN
+        PRIORITATES_APR1
+            PRIORITATES APREKINASANA = X
+            RINDA ADD(X) PASUTIJUMA NUMURS
+                IF PRINTERIS == BRIVS THEN
+                    REPEAT
+                        DRUKASANA
+                        IF PASUTIJUMS != BRAKIS THEN
+                            UNTIL PASUTIJUMS GATAVS
+                        END IF
+                    PASUTIJUMA PECAPSTRADE
+                ELSE
+                    RINDA ADD(1)
+                END IF
+    ELSE
+        MATERIALA PASUTISANA
+        IF MATERIALS == EXIST THEN
+            GOTO PRIORITATES_APR1
+        ELSE
+            WAIT (24 H)
+            GOTO MATERIALA_PARB1
+        END IF
+    END IF
+
+END MAIN_PROGRAM
+
