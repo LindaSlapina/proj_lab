@@ -85,4 +85,5 @@ Kavēšanās minimizācija: ja uzņēmums vispirms koncentrējas uz lieliem pas�
 |Pārlūks|
 
 
-
+## Blokshēma 
+![](blokshema.png)
