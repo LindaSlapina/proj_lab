@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import inspect
 import os
 
 # Инициализация Flask-приложения
@@ -13,5 +14,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Инициализация SQLAlchemy
 db = SQLAlchemy(app)
 
-# Импорт маршрутов и моделей
 from app import routes, model
+
+with app.app_context():
+    db.create_all()
+
+
