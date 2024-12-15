@@ -23,3 +23,66 @@ body {
     padding: 7px 35px;
     text-decoration: none;
 }
+
+.contactBox {
+    position: absolute;
+            right: 130px; 
+            top: 210px;  
+            padding-top: 30px;
+            padding-bottom: 30px;
+            padding-left: 40px;
+            padding-right: 70px;
+            background-color: #f0f0f0;
+            border-radius: 8px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.contactBox h1 {
+    font-family: "Dancing Script", serif;
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.contactBox p {
+    font-family: "Times New Roman", serif;
+    font-size: 18px;
+    margin: 10px 0;
+    color: #555;
+    
+}
+
+
+.title-label {
+    font-family: "Dancing Script", serif;
+    font-weight: bold;
+}
+
+.contactBox a {
+    color: #0066cc;
+    text-decoration: none;
+    
+}
+
+.contactBox a:hover {
+    text-decoration: underline;
+}
+
+.contactBox h2 {
+    font-family: "Dancing Script", serif;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 24px;
+    color:#333
+    
+}
+
+.social-media {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
