@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Pasūtījumu drukāšana konraktinformācija</title>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/kontinf.css') }}">
+	<link rel="stylesheet" href="kontinf.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&display=swap" rel="stylesheet">
@@ -12,13 +12,29 @@
 
 </head>
 <body>
-	<img class="photo" src="../static/images/foto.jpg">
+	<img class="photo" src="foto.jpg">
 
 	<div class="classButton">
-    <a href="/app/static" class="button1">← Atgriezties</a>
+    <a href="main.html" class="button1">← Atgriezties</a>
     
     </div>
 
+	<div class="contactBox"> 
+		<h1> Kontaktinformācija </h1>
+		<p><strong class="title-label">Uņēmuma nosaukums: </strong> SIA DRUKA</p>
+		<p><strong class="title-label">Adrese: </strong> Rīgas iela 123, Rīga, LV-1234, Latvija</p>
+		<p><strong class="title-label">Telefona numurs: </strong> +371 23456789</p>
+		<p><strong class="title-label">E-pasts: </strong> druka123@gmail.com </p>
+		<p><strong class="title-label">Darba laiks: </strong> Pirmdiena - Piektdiena, 9:00 - 17:00</p>
+		<h2> Seko mums: </h2>
+		<p class="social-media">
+			<a href="https://www.facebook.com" target="_blank"> Facebook </a> | 
+			<a href="https://www.instagram.com" target="_blank"> Instagram </a> |
+			<a href="https://www.tiktok.com" target="_blank"> TikTok </a>
+	
+		</p>
+
+	</div>
 
 </body>
 </html>
