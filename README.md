@@ -72,7 +72,7 @@ Kavēšanās minimizācija: ja uzņēmums vispirms koncentrējas uz lieliem pas�
 |--------------------|
 |Satvars: Flask|
 |Programmēšanas valoda: Python|
-|Datu bāze: SQLalchemy|
+|Datu bāze: SQLite|
 |Tīmekļa serveris: Nginx|
 |OS: Ubuntu|
 |Virtualizācija: VMware|
