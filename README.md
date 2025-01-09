@@ -5,7 +5,7 @@
 - Georgijs Jefimovs
 - Diana Sorokina
 - Linda Slapiņa
-- Vitalijs Vasiļjevs
+- Vitālijs Vasiļjevs
 
 
 
