@@ -15,23 +15,29 @@
 <script>
     function poga_pieejams(button) {
         var loga_info = button.parentNode;
+        var kopstatInfo = document.getElementById("kopejais_stat");
         var buttons = loga_info.getElementsByClassName('button_mater');
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].style.display = 'none';
         }
         var tekstsNew = document.createTextNode("Ir pieejams");
+        var textstKopStatuss = document.createTextNode("Gaida rindā");
+        kopstatInfo.appendChild(textstKopStatuss);
         loga_info.appendChild(tekstsNew);
     }
 
     function order(button) {
         var loga_info = button.parentNode;
+        var kopstatInfo = document.getElementById("kopejais_stat");
         var buttons = loga_info.getElementsByClassName('button_mater');
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].style.display = 'none';
         }
         var pasutijuma_stat = document.createTextNode("Pasūtīts");
         loga_info.appendChild(pasutijuma_stat);
-        
+        var textstKopStatuss = document.createTextNode("Gaida materiālu piegādi");
+        kopstatInfo.appendChild(textstKopStatuss);
+
         var poga_sanemts = document.createElement("button");
         poga_sanemts.className = "button_mater";
         poga_sanemts.innerHTML = "Saņemts";
@@ -40,12 +46,33 @@
             
             if (pasutijuma_stat) {
                 loga_info.removeChild(pasutijuma_stat);
+                kopstatInfo.removeChild(textstKopStatuss);
             }
 
             var availabletekstsNew = document.createTextNode("Ir pieejams");
             loga_info.appendChild(availabletekstsNew);
+
+            var textstKopStatussNew = document.createTextNode("Gaida rindā");
+            kopstatInfo.appendChild(textstKopStatussNew);
         };
         loga_info.appendChild(poga_sanemts);
+    }
+
+    function nakamais_pasutijums(button) {
+        var idInfo = document.getElementById("ID_id");
+        var formatsInfo = document.getElementById("ID_formats");
+        var skaitsInfo = document.getElementById("ID_skaits");
+        var piezimesInfo = document.getElementById("ID_Piezimes");
+        var statussInfo = document.getElementById("ID_statuss");
+
+
+
+        idInfo.textContent= ""; 
+        formatsInfo.textContent = "";
+        skaitsInfo.textContent = "";
+        piezimesInfo.textContent = ""; 
+        statussInfo.textContent = "";
+
     }
 </script>
 </head>
@@ -66,16 +93,16 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>A3</td>
-                        <td>20gb</td>
-                        <td>Lai būtu centrēts</td>
-                        <td>Notiek printēšana</td>
+                        <td id="ID_id">1</td>
+                        <td id="ID_formats">A3</td>
+                        <td id="ID_skaits">20gb</td>
+                        <td id="ID_Piezimes">Lai būtu centrēts</td>
+                        <td id="ID_statuss">Notiek printēšana</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <button class="button">Gatavs</button>
+        <button class="button" onclick="nakamais_pasutijums(this)">Gatavs</button>
     </div>
     <div class="divider"></div>
     <div class="content">
@@ -102,7 +129,7 @@
                             <button class="button_mater" onclick="poga_pieejams(this)">Ir noliktavā</button>
                             <button class="button_mater" onclick="order(this)">Pasūtīt</button>
                         </td>
-                        <td></td>
+                        <td id="kopejais_stat"></td>
                     </tr>
                 </tbody>
             </table>
