@@ -13,8 +13,36 @@
 
 </head>
 <script>
+    function updateStatus(orderId, newStatus) {
+        // Отправляем POST-запрос на сервер для обновления статуса
+        fetch('/update_status', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `id=${orderId}&status=${newStatus}`
+        })
+        .then(response => {
+            if (response.ok) {
+
+            } else {
+                alert('Failed to update status!');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error updating status!');
+        });
+    }
+
     function poga_pieejams(button) {
         var row = button.closest("tr"); // Получаем текущую строку
+
+        var orderId = row.cells[0].textContent; // Получаем ID заказа из первого столбца
+
+        // Обновляем статус в базе данных через сервер
+        updateStatus(orderId, "Ir pieejams");
+
         var materialStatusCell = row.cells[4]; // Столбец для статуса материала
         var overallStatusCell = row.cells[5]; // Столбец для общего статуса
     
@@ -33,6 +61,11 @@
         var row = button.closest("tr"); // Получаем текущую строку
         var materialStatusCell = row.cells[4]; // Столбец для статуса материала
         var overallStatusCell = row.cells[5]; // Столбец для общего статуса
+
+        var orderId = row.cells[0].textContent; // Получаем ID заказа
+
+        // Обновляем статус в базе данных через сервер
+        updateStatus(orderId, "Pasūtīts");
     
         // Скрываем кнопки
         var buttons = row.getElementsByClassName('button_mater');
@@ -49,12 +82,28 @@
         receivedButton.className = "button_mater";
         receivedButton.textContent = "Saņemts";
         receivedButton.onclick = function () {
+            updateStatus(orderId, "Ir pieejams");  // Обновляем статус в базе
             // Обновляем статус при нажатии на "Saņemts"
             materialStatusCell.textContent = "Ir pieejams";
             overallStatusCell.textContent = "Gaida rindā";
             receivedButton.style.display = "none"; // Скрываем кнопку "Saņemts"
         };
         materialStatusCell.appendChild(receivedButton);
+    }
+
+    function gatavs_printesanai(button) {
+        var row = button.closest("tr"); // Получаем текущую строку
+        var materialStatusCell = row.cells[4];
+        var overallStatusCell = row.cells[5]; // Столбец для общего статуса
+        var orderId = row.cells[0].textContent; // Получаем ID заказа
+
+        // Обновляем статус в базе данных через сервер
+        updateStatus(orderId, "Ir pieejams");
+
+        // Обновляем текст
+        materialStatusCell.textContent = "Ir pieejams";
+        overallStatusCell.textContent = "Gaida rindā";
+        receivedButton.style.display = "none"; 
     }
     
     function nakamais_pasutijums(button) {
@@ -126,14 +175,23 @@
                         <td>{{ order.daudzums }} gab</td>
                         <td>{{ order.komentari or "Nav piezīmju" }}</td>
                         <td>
-                            {% if order.materiala_statuss == 'Pieejams' %}
-                            Ir pieejams
+                            {% if order.materiala_statuss == 'Ir pieejams' %}
+                                Ir pieejams
+                            {% elif order.materiala_statuss == 'Pasūtīts' %}
+                                Pasūtīts
+                                <button class="button_mater" onclick="gatavs_printesanai(this)">Saņemts</button>
                             {% else %}
-                            <button class="button_mater" onclick="poga_pieejams(this)">Ir noliktavā</button>
-                            <button class="button_mater" onclick="order(this)">Pasūtīt</button>
+                                <button class="button_mater" onclick="poga_pieejams(this)">Ir noliktavā</button>
+                                <button class="button_mater" onclick="order(this)">Pasūtīt</button>
                             {% endif %}
                         </td>
-                        <td id="kopejais_stat"></td>
+                        <td id="kopejais_stat">
+                            {% if order.materiala_statuss == 'Ir pieejams' %}
+                                Gaida rindā
+                            {% elif order.materiala_statuss == 'Pasūtīts' %}
+                                Gaida materiālu piegādi
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

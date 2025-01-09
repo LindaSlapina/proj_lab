@@ -49,6 +49,37 @@ def login():
             error_message = 'Nepareizs logins vai parole!'
 
     return render_template('ielogosanas.html', error_message=error_message)
+
+@app.route('/update_status', methods=['POST'])
+def update_status():
+    try:
+        # Получаем данные из запроса
+        order_id = request.form['id']
+        new_status = request.form['status']
+
+        # Ищем заказ по ID
+        order = Pasutijums.query.get(order_id)
+
+        if order:
+            # Обновляем статус
+            order.materiala_statuss = new_status
+
+            # Сохраняем изменения
+            db.session.commit()
+
+            # Успешный ответ
+            return "Status updated successfully", 200
+        else:
+            # Если заказ не найден
+            return "Order not found", 404
+
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error updating status: {e}")
+        return f"Error: {e}", 400
+
+    finally:
+        db.session.close()
  
 @app.route('/submit', methods=['POST'])   
 def submit():
