@@ -18,6 +18,10 @@ def home():
 def kontaktinfo():
     return render_template('kontaktinfo.html')
 
+@app.route('/ielogosanas')
+def ielogosanas():
+    return render_template('ielogosanas.html')
+
 @app.route('/pasutisana')
 def pasutisana():
     return render_template('pasutisana.html')
