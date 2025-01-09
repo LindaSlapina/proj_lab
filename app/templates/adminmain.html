@@ -77,7 +77,7 @@
 </head>
 <body>
 <div class="container">
-    <h2 style="padding-left: 10px;">Printējas pasūtījums:</h2>
+    <h2>Printējas pasūtījums:</h2>
     <div class="header">
         <div class="order1">
             <table>
@@ -104,8 +104,45 @@
         <button class="button" onclick="nakamais_pasutijums(this)">Gatavs</button>
     </div>
     <div class="divider"></div>
+    <h2>Gaida rindā</h2>
     <div class="content">
-        <h2>Gaida rindā</h2>
+        
+        <div class="order">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Formāts</th>
+                        <th>Skaits</th>
+                        <th>Piezīmes</th>
+                        <th>Materiālu statuss</th>
+                        <th>Kopējs statuss</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.izmers }}</td>
+                        <td>{{ order.daudzums }} gab</td>
+                        <td>{{ order.komentari or "Nav piezīmju" }}</td>
+                        <td>
+                            {% if order.materiala_statuss == 'Pieejams' %}
+                            Ir pieejams
+                            {% else %}
+                            <button class="button_mater" onclick="poga_pieejams(this)">Ir noliktavā</button>
+                            <button class="button_mater" onclick="order(this)">Pasūtīt</button>
+                            {% endif %}
+                        </td>
+                        <td id="kopejais_stat"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h2>Pabeigtie pasūtījumi</h2>
+    <div class="content" >
         <div class="order">
             <table>
                 <thead>
