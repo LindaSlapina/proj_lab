@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #efebe5;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Pielāgo augstumu, ja nepieciešams */
+    width: 95%; /* Pielāgo platumu, ja nepieciešams */
+    margin:auto; /* Horizontāla un vertikāla centrēšana */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* Balts fons konteineram */
+    border-radius: 10px; /* Noapaļoti stūri */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 0 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.divider {
+    height: 2px;
+    background-color: black;
+}
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #ffffff;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.order {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.order1 {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 30px;
+    width: 79%;
+}
+
+.button { 
+    padding: 20px 20px;
+    margin-bottom: 20px; 
+    margin-right: 40px;
+    background-color: #efebe5; 
+    color: black; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 20px; 
+    border-radius: 10px; 
+} 
+
+.button:hover, .button_mater:hover { 
+    background-color: #AFE1AF; 
+    color: black;
+}    
+
+.button_mater{
+    padding: 5px 5px;
+    background-color: #efebe5; 
+    color: black; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 15px; 
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #efebe5;
+}  

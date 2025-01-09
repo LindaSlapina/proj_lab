@@ -22,6 +22,11 @@ def kontaktinfo():
 def ielogosanas():
     return render_template('ielogosanas.html')
 
+@app.route('/adminmain')
+def adminmain():
+    return render_template('adminmain.html')
+
+
 @app.route('/pasutisana')
 def pasutisana():
     return render_template('pasutisana.html')
