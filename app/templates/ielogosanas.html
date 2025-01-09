@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pasūtījumu drukašana</title>
    
-
-    <link rel="stylesheet" href="ielogosanas_css.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ielogosanas_css.css') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +16,7 @@
 
 </head>
 <body>
-    <img class="photo" src="foto.jpg">
+    <img class="photo" src="../static/images/foto.jpg">
 
     <div class="texts">
     <h1>Ielogošanās</h1>
