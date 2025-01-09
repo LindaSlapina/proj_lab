@@ -13,47 +13,39 @@
 
 </head>
 <script>
-    function markAsAvailable(button) {
-        var cell = button.parentNode;
-        // Paslēpj abas pogas
-        var buttons = cell.getElementsByClassName('button_mater');
+    function poga_pieejams(button) {
+        var loga_info = button.parentNode;
+        var buttons = loga_info.getElementsByClassName('button_mater');
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].style.display = 'none';
         }
-        // Parāda tekstu "Ir pieejams"
-        var textNode = document.createTextNode("Ir pieejams");
-        cell.appendChild(textNode);
+        var tekstsNew = document.createTextNode("Ir pieejams");
+        loga_info.appendChild(tekstsNew);
     }
 
     function order(button) {
-        var cell = button.parentNode;
-        // Paslēpj abas pogas
-        var buttons = cell.getElementsByClassName('button_mater');
+        var loga_info = button.parentNode;
+        var buttons = loga_info.getElementsByClassName('button_mater');
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].style.display = 'none';
         }
-        // Parāda tekstu "PASŪTĪTS"
-        var orderText = document.createTextNode("PASŪTĪTS");
-        cell.appendChild(orderText);
+        var pasutijuma_stat = document.createTextNode("Pasūtīts");
+        loga_info.appendChild(pasutijuma_stat);
         
-        // Izveido un pievieno pogu "Saņemts"
-        var receivedButton = document.createElement("button");
-        receivedButton.className = "button_mater";
-        receivedButton.innerHTML = "Saņemts";
-        receivedButton.onclick = function() {
-            // Paslēpj "Saņemts" pogu
-            receivedButton.style.display = 'none';
+        var poga_sanemts = document.createElement("button");
+        poga_sanemts.className = "button_mater";
+        poga_sanemts.innerHTML = "Saņemts";
+        poga_sanemts.onclick = function() {
+            poga_sanemts.style.display = 'none';
             
-            // Izdzēš "PASŪTĪTS" tekstu
-            if (orderText) {
-                cell.removeChild(orderText);
+            if (pasutijuma_stat) {
+                loga_info.removeChild(pasutijuma_stat);
             }
 
-            // Parāda tekstu "Ir pieejams"
-            var availableTextNode = document.createTextNode("Ir pieejams");
-            cell.appendChild(availableTextNode);
+            var availabletekstsNew = document.createTextNode("Ir pieejams");
+            loga_info.appendChild(availabletekstsNew);
         };
-        cell.appendChild(receivedButton);
+        loga_info.appendChild(poga_sanemts);
     }
 </script>
 </head>
@@ -107,10 +99,10 @@
                         <td>20gb</td>
                         <td>Lai būtu centrēts</td>
                         <td>
-                            <button class="button_mater" onclick="markAsAvailable(this)">Ir noliktavā</button>
+                            <button class="button_mater" onclick="poga_pieejams(this)">Ir noliktavā</button>
                             <button class="button_mater" onclick="order(this)">Pasūtīt</button>
                         </td>
-                        <td>Notiek printēšana</td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
