@@ -17,3 +17,11 @@ class Pasutijums(db.Model):
 
     def __repr__(self):
         return f'<Pasutijums {self.vards} {self.uzvards}>'
+
+class Darbinieki(db.Model):
+    __tablename__ = 'darbinieki'
+    
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True) 
+    login = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(20), nullable=False)
+

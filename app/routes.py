@@ -1,7 +1,7 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, flash
 
 from app import app, db
-from app.model import Pasutijums
+from app.model import Pasutijums, Darbinieki
 import os
 import logging
 UPLOAD_FOLDER = 'uploads'
@@ -21,7 +21,26 @@ def kontaktinfo():
 @app.route('/pasutisana')
 def pasutisana():
     return render_template('pasutisana.html')
-@app.route('/submit', methods=['POST'])
+
+@app.route('/ielogosanas', methods=['GET', 'POST'])
+def login():
+    error_message = None
+    if request.method == 'POST':
+        login = request.form['login']
+        password = request.form['password']
+
+        # Поиск пользователя по логину
+        user = Darbinieki.query.filter_by(login=login).first()
+
+        if user and user.password == password:  # Проверка пароля
+            # Авторизация успешна
+            return redirect(url_for('home'))  # Перенаправление на главную
+        else:
+            error_message = 'Nepareizs logins vai parole!'
+
+    return render_template('ielogosanas.html', error_message=error_message)
+ 
+@app.route('/submit', methods=['POST'])   
 def submit():
     try:
         vards = request.form['vards']
@@ -61,3 +80,4 @@ def submit():
     except Exception as e:
         logging.error(f"Error: {e}")
         return f"Error: {e}", 400
+
