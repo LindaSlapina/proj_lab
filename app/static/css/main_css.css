@@ -52,7 +52,20 @@ body {
 }
 
 
-
+.button3{
+    position: absolute;
+    right: 50px;
+    top: 20px;
+    border: none;
+    background-color: #f0f0f0;
+    color: buttontext;
+    border-radius: 8px;
+    font-family: "Dancing Script", serif;
+    font-size: 20px;
+    padding: 14px 20px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
 
 .dancing-script-unique {
   font-family: "Dancing Script", serif;
