@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    font-family: "Times New Roman"; 
+    display: flex;
+    height: 100vh;
+    background-color: #efebe5;
+}
+
+
+.photo{
+    opacity: 0.44;
+}
+
+.texts {
+    position: absolute;
+    bottom: 55%;
+    right: 6.5%; 
+    font-family: "Dancing Script", serif;
+    font-size: 55px;
+    user-select: none;
+}
+
+input{
+   margin-bottom: 5px;
+}
+
+input[type="submit"]{
+    position: absolute;
+    bottom: 5%;
+    right: 30%; 
+    margin-top: 10px;
+}
+
+
+
+.inputBox {
+            position: absolute;
+            right: 14%; 
+            bottom: 40%; 
+            padding: 20px;
+            padding-bottom: 50px;
+            background-color: #f0f0f0;
+            border-radius: 8px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        }
+
+.dancing-script-unique {
+  font-family: "Dancing Script", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
