@@ -18,6 +18,15 @@ def home():
 def kontaktinfo():
     return render_template('kontaktinfo.html')
 
+@app.route('/ielogosanas')
+def ielogosanas():
+    return render_template('ielogosanas.html')
+
+@app.route('/adminmain')
+def adminmain():
+    return render_template('adminmain.html')
+
+
 @app.route('/pasutisana')
 def pasutisana():
     return render_template('pasutisana.html')
@@ -34,7 +43,7 @@ def login():
 
         if user and user.password == password:  # Проверка пароля
             # Авторизация успешна
-            return redirect(url_for('home'))  # Перенаправление на главную
+            return redirect(url_for('adminmain'))  # Перенаправление на главную
         else:
             error_message = 'Nepareizs logins vai parole!'
 
