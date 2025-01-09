@@ -11,84 +11,111 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&display=swap" rel="stylesheet">
 
+</head>
+<script>
+    function markAsAvailable(button) {
+        var cell = button.parentNode;
+        // Paslēpj abas pogas
+        var buttons = cell.getElementsByClassName('button_mater');
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].style.display = 'none';
+        }
+        // Parāda tekstu "Ir pieejams"
+        var textNode = document.createTextNode("Ir pieejams");
+        cell.appendChild(textNode);
+    }
 
+    function order(button) {
+        var cell = button.parentNode;
+        // Paslēpj abas pogas
+        var buttons = cell.getElementsByClassName('button_mater');
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].style.display = 'none';
+        }
+        // Parāda tekstu "PASŪTĪTS"
+        var orderText = document.createTextNode("PASŪTĪTS");
+        cell.appendChild(orderText);
+        
+        // Izveido un pievieno pogu "Saņemts"
+        var receivedButton = document.createElement("button");
+        receivedButton.className = "button_mater";
+        receivedButton.innerHTML = "Saņemts";
+        receivedButton.onclick = function() {
+            // Paslēpj "Saņemts" pogu
+            receivedButton.style.display = 'none';
+            
+            // Izdzēš "PASŪTĪTS" tekstu
+            if (orderText) {
+                cell.removeChild(orderText);
+            }
 
+            // Parāda tekstu "Ir pieejams"
+            var availableTextNode = document.createTextNode("Ir pieejams");
+            cell.appendChild(availableTextNode);
+        };
+        cell.appendChild(receivedButton);
+    }
+</script>
 </head>
 <body>
-    <body>
-        <div class="container">
-            <h2 style="padding-left: 10px;">Printējas pasūtījums:</h2>
-            <div class="header">
-                <div class="order1">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Formāts</th>
-                                <th>Skaits</th>
-                                <th>Piezīmes</th>
-                                <th>Kopējs statuss</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>A3</td>
-                                <td>20gb</td>
-                                <td>Lai būtu centrēts</td>
-                                <td>Notiek printēšana</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <button class="button">Gatavs</button>
-            </div>
-            <div class="divider"></div>
-            <div class="content">
-                <h2>Gaida rindā</h2>
-                <div class="order"><table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Formāts</th>
-                                <th>Skaits</th>
-                                <th>Piezīmes</th>
-                                <th>Materiālu statuss</th>
-                                <th>Kopējs statuss</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>A3</td>
-                                <td>20gb</td>
-                                <td>Lai būtu centrēts</td>
-                                <td><button class="button_mater">Ir noliktavā</button>
-                                    <button class="button_mater">Pasūtīt</button></td>
-                                <td>Notiek printēšana</td>
-                            </tr>
-                        </tbody>
-                    </table></div>
-                <div class="order">Pasūtījums 2</div>
-                <div class="order">Pasūtījums 3</div>
-                <div class="order">Pasūtījums 4</div>
-                <div class="order">Pasūtījums 5</div>
-                <div class="order">Pasūtījums 6</div>
-                <div class="order">Pasūtījums 7</div>
-                <div class="order">Pasūtījums 8</div>
-                <div class="order">Pasūtījums 9</div>
-                <div class="order">Pasūtījums 10</div>
-                <div class="order">Pasūtījums 1</div>
-                <div class="order">Pasūtījums 2</div>
-                <div class="order">Pasūtījums 3</div>
-                <div class="order">Pasūtījums 4</div>
-                <div class="order">Pasūtījums 5</div>
-                <div class="order">Pasūtījums 6</div>
-                <div class="order">Pasūtījums 7</div>
-                <div class="order">Pasūtījums 8</div>
-                <div class="order">Pasūtījums 9</div>
-                <div class="order">Pasūtījums 10</div>
-            </div>
+<div class="container">
+    <h2 style="padding-left: 10px;">Printējas pasūtījums:</h2>
+    <div class="header">
+        <div class="order1">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Formāts</th>
+                        <th>Skaits</th>
+                        <th>Piezīmes</th>
+                        <th>Kopējs statuss</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>A3</td>
+                        <td>20gb</td>
+                        <td>Lai būtu centrēts</td>
+                        <td>Notiek printēšana</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </body>
+        <button class="button">Gatavs</button>
+    </div>
+    <div class="divider"></div>
+    <div class="content">
+        <h2>Gaida rindā</h2>
+        <div class="order">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Formāts</th>
+                        <th>Skaits</th>
+                        <th>Piezīmes</th>
+                        <th>Materiālu statuss</th>
+                        <th>Kopējs statuss</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2</td>
+                        <td>A3</td>
+                        <td>20gb</td>
+                        <td>Lai būtu centrēts</td>
+                        <td>
+                            <button class="button_mater" onclick="markAsAvailable(this)">Ir noliktavā</button>
+                            <button class="button_mater" onclick="order(this)">Pasūtīt</button>
+                        </td>
+                        <td>Notiek printēšana</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
 </html>
