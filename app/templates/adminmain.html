@@ -14,50 +14,49 @@
 </head>
 <script>
     function poga_pieejams(button) {
-        var loga_info = button.parentNode;
-        var kopstatInfo = document.getElementById("kopejais_stat");
-        var buttons = loga_info.getElementsByClassName('button_mater');
+        var row = button.closest("tr"); // Получаем текущую строку
+        var materialStatusCell = row.cells[4]; // Столбец для статуса материала
+        var overallStatusCell = row.cells[5]; // Столбец для общего статуса
+    
+        // Скрываем кнопки
+        var buttons = row.getElementsByClassName('button_mater');
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].style.display = 'none';
         }
-        var tekstsNew = document.createTextNode("Ir pieejams");
-        var textstKopStatuss = document.createTextNode("Gaida rindā");
-        kopstatInfo.appendChild(textstKopStatuss);
-        loga_info.appendChild(tekstsNew);
+    
+        // Обновляем текст
+        materialStatusCell.textContent = "Ir pieejams";
+        overallStatusCell.textContent = "Gaida rindā";
     }
 
     function order(button) {
-        var loga_info = button.parentNode;
-        var kopstatInfo = document.getElementById("kopejais_stat");
-        var buttons = loga_info.getElementsByClassName('button_mater');
+        var row = button.closest("tr"); // Получаем текущую строку
+        var materialStatusCell = row.cells[4]; // Столбец для статуса материала
+        var overallStatusCell = row.cells[5]; // Столбец для общего статуса
+    
+        // Скрываем кнопки
+        var buttons = row.getElementsByClassName('button_mater');
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].style.display = 'none';
         }
-        var pasutijuma_stat = document.createTextNode("Pasūtīts");
-        loga_info.appendChild(pasutijuma_stat);
-        var textstKopStatuss = document.createTextNode("Gaida materiālu piegādi");
-        kopstatInfo.appendChild(textstKopStatuss);
-
-        var poga_sanemts = document.createElement("button");
-        poga_sanemts.className = "button_mater";
-        poga_sanemts.innerHTML = "Saņemts";
-        poga_sanemts.onclick = function() {
-            poga_sanemts.style.display = 'none';
-            
-            if (pasutijuma_stat) {
-                loga_info.removeChild(pasutijuma_stat);
-                kopstatInfo.removeChild(textstKopStatuss);
-            }
-
-            var availabletekstsNew = document.createTextNode("Ir pieejams");
-            loga_info.appendChild(availabletekstsNew);
-
-            var textstKopStatussNew = document.createTextNode("Gaida rindā");
-            kopstatInfo.appendChild(textstKopStatussNew);
+    
+        // Обновляем текст
+        materialStatusCell.textContent = "Pasūtīts";
+        overallStatusCell.textContent = "Gaida materiālu piegādi";
+    
+        // Добавляем кнопку "Saņemts"
+        var receivedButton = document.createElement("button");
+        receivedButton.className = "button_mater";
+        receivedButton.textContent = "Saņemts";
+        receivedButton.onclick = function () {
+            // Обновляем статус при нажатии на "Saņemts"
+            materialStatusCell.textContent = "Ir pieejams";
+            overallStatusCell.textContent = "Gaida rindā";
+            receivedButton.style.display = "none"; // Скрываем кнопку "Saņemts"
         };
-        loga_info.appendChild(poga_sanemts);
+        materialStatusCell.appendChild(receivedButton);
     }
-
+    
     function nakamais_pasutijums(button) {
         var idInfo = document.getElementById("ID_id");
         var formatsInfo = document.getElementById("ID_formats");
@@ -120,17 +119,23 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for order in orders %}
                     <tr>
-                        <td>2</td>
-                        <td>A3</td>
-                        <td>20gb</td>
-                        <td>Lai būtu centrēts</td>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.izmers }}</td>
+                        <td>{{ order.daudzums }} gab</td>
+                        <td>{{ order.komentari or "Nav piezīmju" }}</td>
                         <td>
+                            {% if order.materiala_statuss == 'Pieejams' %}
+                            Ir pieejams
+                            {% else %}
                             <button class="button_mater" onclick="poga_pieejams(this)">Ir noliktavā</button>
                             <button class="button_mater" onclick="order(this)">Pasūtīt</button>
+                            {% endif %}
                         </td>
                         <td id="kopejais_stat"></td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

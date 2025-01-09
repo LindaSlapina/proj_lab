@@ -9,6 +9,7 @@ app = Flask(__name__)
 # Конфигурация базы данных
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(basedir, "datubaze.db")}'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///datubaze.db?check_same_thread=False'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Инициализация SQLAlchemy

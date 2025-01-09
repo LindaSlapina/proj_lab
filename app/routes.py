@@ -24,7 +24,8 @@ def ielogosanas():
 
 @app.route('/adminmain')
 def adminmain():
-    return render_template('adminmain.html')
+    orders = Pasutijums.query.all()
+    return render_template('adminmain.html', orders=orders)
 
 
 @app.route('/pasutisana')
@@ -61,6 +62,7 @@ def submit():
         daudzums = request.form['gab']
         komentari = request.form['komentari']
         faila_aug = request.files['faila_aug']
+        materiala_statuss='Nav zināms'
 
         # Сохранение файла
         filename = None
@@ -78,7 +80,8 @@ def submit():
             izmers=izmers,
             daudzums=int(daudzums),
             komentari=komentari,
-            FailaAugšupielāde=filename  # Убедитесь, что используете правильное имя колонки
+            FailaAugšupielāde=filename,  # Убедитесь, что используете правильное имя колонки
+            materiala_statuss=materiala_statuss
         )
 
         db.session.add(new_order)
@@ -87,6 +90,9 @@ def submit():
         return redirect(url_for('home'))
 
     except Exception as e:
+        db.session.rollback()
         logging.error(f"Error: {e}")
         return f"Error: {e}", 400
 
+    finally:
+        db.session.close()

@@ -12,8 +12,10 @@ class Pasutijums(db.Model):
     izmers = db.Column(db.String(50), nullable=False)
     daudzums = db.Column(db.Integer, nullable=False)
     komentari = db.Column(db.Text)
+    materiala_statuss = db.Column(db.String(50))
     FailaAugšupielāde = db.Column(db.String(255))
     IzveidotsLaiks = db.Column(db.TIMESTAMP, default=db.func.current_timestamp())
+    
 
     def __repr__(self):
         return f'<Pasutijums {self.vards} {self.uzvards}>'
