@@ -226,7 +226,7 @@
                         <td>{{ order.daudzums }} gab</td>
                         <td>{{ order.komentari or "Nav piezīmju" }}</td>
                         <td>
-                            {% if order.materiala_statuss == 'Pieejams' %}
+                            {% if order.materiala_statuss == 'Ir pieejams' %}
                             Ir pieejams
                             {% else %}
                             <button class="button_mater" onclick="poga_pieejams(this)">Ir noliktavā</button>
