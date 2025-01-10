@@ -14,26 +14,19 @@
 </head>
 <script>
     function updateStatus(orderId, newStatus) {
-        // Отправляем POST-запрос на сервер для обновления статуса
-        fetch('/update_status', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `id=${orderId}&status=${newStatus}`
-        })
-        .then(response => {
-            if (response.ok) {
-
-            } else {
-                alert('Failed to update status!');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error updating status!');
-        });
-    }
+    return fetch('/update_status', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `id=${orderId}&status=${newStatus}`
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update status on server');
+        }
+        return response.json(); // Возвращаем данные, если нужно
+    });
+}
 
     function poga_pieejams(button) {
     var row = button.closest("tr"); // Получаем текущую строку
@@ -104,32 +97,48 @@
         receivedButton.style.display = "none"; 
     }
     
-    function nakamais_pasutijums(button) {
-    var row = button.closest("tr"); // Получаем текущую строку
-    var orderId = row.cells[0].textContent; // Получаем ID заказа
-    var materialStatusCell = row.cells[4]; // Столбец для статуса материала
-    var overallStatusCell = row.cells[5]; // Столбец для общего статуса
+function nakamais_pasutijums(button) {
+    var orderId = button.getAttribute("data-id"); // Получаем ID заказа из data-id
+    if (!orderId) {
+        console.error("ID заказа не найден!");
+        return;
+    }
+
+    // Находим строку таблицы вручную
+    var rows = document.querySelectorAll("table tbody tr"); // Получаем все строки таблицы
+    var row = null;
+
+    // Ищем строку с нужным ID
+    rows.forEach(function(currentRow) {
+        var firstCell = currentRow.cells[0]; // Первая ячейка строки
+        if (firstCell && firstCell.textContent.trim() === orderId) {
+            row = currentRow;
+        }
+    });
+
+    if (!row) {
+        console.error("Строка таблицы с ID " + orderId + " не найдена!");
+        return;
+    }
+
+    var materialStatusCell = row.cells[4]; // Столбец "Материальный статус"
+    var overallStatusCell = row.cells[5]; // Столбец "Общий статус"
 
     // Обновляем статус на сервере
-    updateStatus(orderId, "Gaida piegādi");
+    updateStatus(orderId, "Gaida piegādi")
+        .then(() => {
+            materialStatusCell.textContent = "Gaida piegādi";
+            overallStatusCell.textContent = "Gaida piegādi";
+            button.disabled = true;
+            button.textContent = "Статус обновлён";
 
-    // Обновляем текст в таблице
-    materialStatusCell.textContent = "Gaida piegādi";
-    overallStatusCell.textContent = "Gaida piegādi";
+            location.reload();
+        })
+        .catch(error => {
+            console.error("Ошибка обновления статуса:", error);
+            alert("Не удалось обновить статус заказа!");
+        });
 }
-
-    function aizsutits(button) {
-        var row = button.closest("tr");
-        var orderId = row.cells[0].textContent;
-        var statusCell = row.cells[7]; 
-
-        updateStatus(orderId, "Gaida piegādi");
-
-        statusCell.textContent = "Gaida piegādi";
-
-        button.textContent = "Saņemts";
-        button.onclick = function () { sanemts(this); };
-    }
 
     function sanemts(button) {
         var row = button.closest("tr");
@@ -200,7 +209,7 @@
             </tbody>
             </table>
         </div>
-        <button class="button" onclick="nakamais_pasutijums(this)">Gatavs</button>
+        <button class="button" data-id="{{ available_order.id }}" onclick="nakamais_pasutijums(this)">Gatavs</button>
     </div>
     <div class="divider"></div>
     <h2>Gaida rindā: </h2>

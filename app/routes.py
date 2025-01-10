@@ -24,7 +24,7 @@ def ielogosanas():
 
 @app.route('/adminmain')
 def adminmain():
-    all_orders = Pasutijums.query.filter_by()
+    all_orders = Pasutijums.query.filter(Pasutijums.materiala_statuss != 'Gaida piegādi').all()
     available_order = (
         Pasutijums.query.filter_by(materiala_statuss='Ir pieejams').first()
     )
