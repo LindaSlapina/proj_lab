@@ -122,6 +122,55 @@
         statussInfo.textContent = "";
 
     }
+
+    function aizsutits(button) {
+        var row = button.closest("tr");
+        var orderId = row.cells[0].textContent;
+        var statusCell = row.cells[7]; 
+
+        updateStatus(orderId, "Gaida piegādi");
+
+        statusCell.textContent = "Gaida piegādi";
+
+        button.textContent = "Saņemts";
+        button.onclick = function () { sanemts(this); };
+    }
+
+    function sanemts(button) {
+        var row = button.closest("tr");
+        var orderId = row.cells[0].textContent;
+        var statusCell = row.cells[7]; 
+        updateStatus(orderId, "Pabeigts");
+        statusCell.textContent = "Pabeigts";
+        button.style.display = "none";
+        var tbody = row.parentElement;
+        tbody.appendChild(row); 
+    }
+
+    function filterById() {
+    var input = document.getElementById("searchId").value.trim();
+    var table = document.getElementById("completedOrdersTable");
+    var rows = table.getElementsByTagName("tr");
+
+    // Ja nav ievadīts ID, atgriež visas rindas
+    if (!input) {
+        for (var i = 1; i < rows.length; i++) { // Sākam no 1, lai ignorētu virsrakstu rindu
+            rows[i].style.display = "";
+        }
+        return;
+    }
+
+    // Filtrē rindas
+    for (var i = 1; i < rows.length; i++) {
+        var idCell = rows[i].cells[0]; // Pieņemam, ka ID ir pirmajā kolonnā
+        if (idCell && idCell.textContent.trim() === input) {
+            rows[i].style.display = ""; // Parāda rindu
+        } else {
+            rows[i].style.display = "none"; // Slēpj rindu
+        }
+    }
+}
+
 </script>
 </head>
 <body>
@@ -191,16 +240,21 @@
         </div>
     </div>
     <h2>Pabeigtie pasūtījumi:</h2>
-    <div class="content" >
+    <div class="content">
         <div class="order">
-            <table>
+            <table id="completedOrdersTable">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Formāts</th>
-                        <th>Skaits</th>
-                        <th>Piezīmes</th>
-                        <th>Materiālu statuss</th>
+                        <th>ID
+                            <input type="text" id="searchId" placeholder="Meklēt ID" style="width: 90px;">
+                            <button onclick="filterById()">🔍</button>
+                        </th> 
+                        <th>Vārds</th>
+                        <th>Uzvārds</th>
+                        <th>E-pasts</th>
+                        <th>Telefona numurs</th>
+                        <th>Adrese</th>
+                        <th>Saņemšanas statuss</th>
                         <th>Kopējs statuss</th>
                     </tr>
                 </thead>
@@ -208,27 +262,15 @@
                     {% for order in orders %}
                     <tr>
                         <td>{{ order.id }}</td>
-                        <td>{{ order.izmers }}</td>
-                        <td>{{ order.daudzums }} gab</td>
-                        <td>{{ order.komentari or "Nav piezīmju" }}</td>
+                        <td>{{ order.vards }}</td>
+                        <td>{{ order.uzvards }}</td>
+                        <td>{{ order.epasts }}</td>
+                        <td>{{ order.TelefonaNumurs }}</td>
+                        <td>{{ order.PiegadesAdrese }}</td>
                         <td>
-                            {% if order.materiala_statuss == 'Ir pieejams' %}
-                                Ir pieejams
-                            {% elif order.materiala_statuss == 'Pasūtīts' %}
-                                Pasūtīts
-                                <button class="button_mater" onclick="gatavs_printesanai(this)">Saņemts</button>
-                            {% else %}
-                                <button class="button_mater" onclick="poga_pieejams(this)">Ir noliktavā</button>
-                                <button class="button_mater" onclick="order(this)">Pasūtīt</button>
-                            {% endif %}
+                            <button class="button_mater" onclick="aizsutits(this)">Aizsūtīts</button>
                         </td>
-                        <td id="kopejais_stat">
-                            {% if order.materiala_statuss == 'Ir pieejams' %}
-                                Gaida rindā
-                            {% elif order.materiala_statuss == 'Pasūtīts' %}
-                                Gaida materiālu piegādi
-                            {% endif %}
-                        </td>
+                        <td id="kopejais_stat">Nav nosūtīts</td>
                     </tr>
                     {% endfor %}
                 </tbody>
