@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
 
 from app import app, db
 from app.model import Pasutijums, Darbinieki
@@ -24,8 +24,17 @@ def ielogosanas():
 
 @app.route('/adminmain')
 def adminmain():
-    orders = Pasutijums.query.all()
-    return render_template('adminmain.html', orders=orders)
+    all_orders = Pasutijums.query.filter_by()
+    available_order = (
+        Pasutijums.query.filter_by(materiala_statuss='Ir pieejams').first()
+    )
+    wait_del = Pasutijums.query.filter_by(materiala_statuss='Gaida piegādi')
+    return render_template(
+        'adminmain.html',
+        orders=all_orders,
+        available_order=available_order,
+        wait_del=wait_del,
+    )
 
 
 @app.route('/pasutisana')
@@ -53,25 +62,19 @@ def login():
 @app.route('/update_status', methods=['POST'])
 def update_status():
     try:
-        # Получаем данные из запроса
-        order_id = request.form['id']
-        new_status = request.form['status']
+        order_id = request.form.get('id')  # Получаем ID заказа
+        new_status = request.form.get('status')  # Получаем новый статус
 
-        # Ищем заказ по ID
+        # Находим заказ по ID и обновляем его статус
         order = Pasutijums.query.get(order_id)
-
         if order:
-            # Обновляем статус
             order.materiala_statuss = new_status
-
-            # Сохраняем изменения
             db.session.commit()
-
-            # Успешный ответ
-            return "Status updated successfully", 200
+            return jsonify({'success': True, 'message': 'Status updated successfully'})
         else:
-            # Если заказ не найден
-            return "Order not found", 404
+            return jsonify({'success': False, 'message': 'Order not found'}), 404
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
 
     except Exception as e:
         db.session.rollback()

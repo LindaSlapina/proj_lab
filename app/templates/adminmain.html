@@ -36,26 +36,24 @@
     }
 
     function poga_pieejams(button) {
-        var row = button.closest("tr"); // Получаем текущую строку
+    var row = button.closest("tr"); // Получаем текущую строку
+    var orderId = row.cells[0].textContent; // Получаем ID заказа из первого столбца
+    var materialStatusCell = row.cells[4]; // Столбец для статуса материала
+    var overallStatusCell = row.cells[5]; // Столбец для общего статуса
 
-        var orderId = row.cells[0].textContent; // Получаем ID заказа из первого столбца
+    // Обновляем статус в базе данных через сервер
+    updateStatus(orderId, "Ir pieejams");
 
-        // Обновляем статус в базе данных через сервер
-        updateStatus(orderId, "Ir pieejams");
-
-        var materialStatusCell = row.cells[4]; // Столбец для статуса материала
-        var overallStatusCell = row.cells[5]; // Столбец для общего статуса
-    
-        // Скрываем кнопки
-        var buttons = row.getElementsByClassName('button_mater');
-        for (var i = 0; i < buttons.length; i++) {
-            buttons[i].style.display = 'none';
-        }
-    
-        // Обновляем текст
-        materialStatusCell.textContent = "Ir pieejams";
-        overallStatusCell.textContent = "Gaida rindā";
+    // Скрываем кнопки
+    var buttons = row.getElementsByClassName('button_mater');
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.display = 'none';
     }
+
+    // Обновляем текст статусов
+    materialStatusCell.textContent = "Ir pieejams";
+    overallStatusCell.textContent = "Gaida rindā";
+}
 
     function order(button) {
         var row = button.closest("tr"); // Получаем текущую строку
@@ -107,21 +105,18 @@
     }
     
     function nakamais_pasutijums(button) {
-        var idInfo = document.getElementById("ID_id");
-        var formatsInfo = document.getElementById("ID_formats");
-        var skaitsInfo = document.getElementById("ID_skaits");
-        var piezimesInfo = document.getElementById("ID_Piezimes");
-        var statussInfo = document.getElementById("ID_statuss");
+    var row = button.closest("tr"); // Получаем текущую строку
+    var orderId = row.cells[0].textContent; // Получаем ID заказа
+    var materialStatusCell = row.cells[4]; // Столбец для статуса материала
+    var overallStatusCell = row.cells[5]; // Столбец для общего статуса
 
+    // Обновляем статус на сервере
+    updateStatus(orderId, "Gaida piegādi");
 
-
-        idInfo.textContent= ""; 
-        formatsInfo.textContent = "";
-        skaitsInfo.textContent = "";
-        piezimesInfo.textContent = ""; 
-        statussInfo.textContent = "";
-
-    }
+    // Обновляем текст в таблице
+    materialStatusCell.textContent = "Gaida piegādi";
+    overallStatusCell.textContent = "Gaida piegādi";
+}
 
     function aizsutits(button) {
         var row = button.closest("tr");
@@ -189,14 +184,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td id="ID_id">1</td>
-                        <td id="ID_formats">A3</td>
-                        <td id="ID_skaits">20gb</td>
-                        <td id="ID_Piezimes">Lai būtu centrēts</td>
-                        <td id="ID_statuss">Notiek printēšana</td>
-                    </tr>
-                </tbody>
+                {% if available_order %}
+                <tr>
+                    <td>{{ available_order.id }}</td>
+                    <td>{{ available_order.izmers }}</td>
+                    <td>{{ available_order.daudzums }} gab</td>
+                    <td>{{ available_order.komentari or "Nav piezīmju" }}</td>
+                    <td>Ir pieejams</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">Nav pasūtījumu ar statusu "Ir pieejams".</td>
+                </tr>
+                {% endif %}
+            </tbody>
             </table>
         </div>
         <button class="button" onclick="nakamais_pasutijums(this)">Gatavs</button>
@@ -259,14 +260,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for order in orders %}
+                    {% for wait_del in wait_del %}
                     <tr>
-                        <td>{{ order.id }}</td>
-                        <td>{{ order.vards }}</td>
-                        <td>{{ order.uzvards }}</td>
-                        <td>{{ order.epasts }}</td>
-                        <td>{{ order.TelefonaNumurs }}</td>
-                        <td>{{ order.PiegadesAdrese }}</td>
+                        <td>{{ wait_del.id }}</td>
+                        <td>{{ wait_del.vards }}</td>
+                        <td>{{ wait_del.uzvards }}</td>
+                        <td>{{ wait_del.epasts }}</td>
+                        <td>{{ wait_del.TelefonaNumurs }}</td>
+                        <td>{{ wait_del.PiegadesAdrese }}</td>
                         <td>
                             <button class="button_mater" onclick="aizsutits(this)">Aizsūtīts</button>
                         </td>
