@@ -190,6 +190,31 @@ function nakamais_pasutijums(button) {
     }
 }
 
+function aizsutits(button){
+
+    var row = button.closest("tr");
+        var orderId = row.cells[0].textContent;
+        var statusCell = row.cells[5]; 
+        updateStatus(orderId, "Gaida piegādi");
+        statusCell.textContent = "Gaida piegādi";
+
+        button.textContent = "Saņemts";
+        button.onclick = function () { sanemtsTwo(this); };
+}
+function sanemtsTwo(button) {
+        var row = button.closest("tr");
+        var orderId = row.cells[0].textContent;
+        var statusCell = row.cells[5]; 
+        updateStatus(orderId, "Pabeigts");
+        statusCell.textContent = "Pabeigts";
+        button.style.display = "none";
+        var tbody = row.parentElement;
+        tbody.appendChild(row); 
+    }
+
+
+
+
 </script>
 </head>
 <body>
