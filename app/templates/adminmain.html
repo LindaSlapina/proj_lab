@@ -151,6 +151,17 @@ function nakamais_pasutijums(button) {
         tbody.appendChild(row); 
     }
 
+    function sanemts_f(button) {
+        var row = button.closest("tr"); // Получаем текущую строку
+        var materialStatusCell = row.cells[4]; // Столбец для статуса материала
+        var overallStatusCell = row.cells[5]; // Столбец для общего статуса
+        var orderId = row.cells[0].textContent; // Получаем ID заказа
+        updateStatus(orderId, "Ir pieejams");  // Обновляем статус в базе
+            // Обновляем статус при нажатии на "Saņemts"
+            materialStatusCell.textContent = "Ir pieejams";
+            overallStatusCell.textContent = "Gaida rindā";
+    }
+
     function filterById() {
     var input = document.getElementById("searchId").value.trim();
     var table = document.getElementById("completedOrdersTable");
@@ -237,12 +248,21 @@ function nakamais_pasutijums(button) {
                         <td>
                             {% if order.materiala_statuss == 'Ir pieejams' %}
                             Ir pieejams
+                            {% elif order.materiala_statuss == 'Pasūtīts' %}
+                            Pasūtīts
+                            <button class="button_mater" onclick="sanemts_f(this)">Saņemts</button>
                             {% else %}
                             <button class="button_mater" onclick="poga_pieejams(this)">Ir noliktavā</button>
                             <button class="button_mater" onclick="order(this)">Pasūtīt</button>
                             {% endif %}
                         </td>
-                        <td id="kopejais_stat"></td>
+                        <td id="kopejais_stat">
+                            {% if order.materiala_statuss == 'Ir pieejams' %}
+                                Gaida rindā
+                            {% elif order.materiala_statuss == 'Pasūtīts' %}
+                                Gaida materiālu piegādi
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

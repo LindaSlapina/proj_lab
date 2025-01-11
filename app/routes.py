@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, flash, jso
 
 from app import app, db
 from app.model import Pasutijums, Darbinieki
+from sqlalchemy import not_
 import os
 import logging
 UPLOAD_FOLDER = 'uploads'
@@ -24,7 +25,7 @@ def ielogosanas():
 
 @app.route('/adminmain')
 def adminmain():
-    all_orders = Pasutijums.query.filter(Pasutijums.materiala_statuss != 'Gaida piegādi').all()
+    all_orders = Pasutijums.query.filter(Pasutijums.materiala_statuss.isnot('Gaida piegādi')).all()
     available_order = (
         Pasutijums.query.filter_by(materiala_statuss='Ir pieejams').first()
     )

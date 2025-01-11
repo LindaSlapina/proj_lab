@@ -15,6 +15,7 @@ class Pasutijums(db.Model):
     materiala_statuss = db.Column(db.String(50))
     FailaAugšupielāde = db.Column(db.String(255))
     IzveidotsLaiks = db.Column(db.TIMESTAMP, default=db.func.current_timestamp())
+    kopejais_statuss = db.Column(db.String(50))
     
 
     def __repr__(self):
