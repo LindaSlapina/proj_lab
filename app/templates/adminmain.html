@@ -28,6 +28,18 @@
     });
 }
 
+function updateStatusWaiting(orderId, vaiGaidija) {
+    return fetch('/update_status_waiting', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `id=${orderId}&gaidija_materialus=${vaiGaidija}`
+    }).then(response => {
+        return response.json(); // Возвращаем данные, если нужно
+    });
+}
+
     function poga_pieejams(button) {
     var row = button.closest("tr"); // Получаем текущую строку
     var orderId = row.cells[0].textContent; // Получаем ID заказа из первого столбца
@@ -36,6 +48,7 @@
 
     // Обновляем статус в базе данных через сервер
     updateStatus(orderId, "Ir pieejams");
+    updateStatusWaiting(orderId, false);
 
     // Скрываем кнопки
     var buttons = row.getElementsByClassName('button_mater');
@@ -150,6 +163,7 @@ function nakamais_pasutijums(button) {
         var overallStatusCell = row.cells[5]; // Столбец для общего статуса
         var orderId = row.cells[0].textContent; // Получаем ID заказа
         updateStatus(orderId, "Ir pieejams");  // Обновляем статус в базе
+        updateStatusWaiting(orderId, true);
             // Обновляем статус при нажатии на "Saņemts"
             materialStatusCell.textContent = "Ir pieejams";
             overallStatusCell.textContent = "Gaida rindā";
