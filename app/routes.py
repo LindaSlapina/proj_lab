@@ -20,6 +20,18 @@ def home():
 def kontaktinfo():
     return render_template('kontaktinfo.html')
 
+@app.route('/prioritizet', methods=['POST'])
+def prioritizet():
+    try:
+        queue_priority_calculation()
+        return jsonify({'success': True, 'message': 'Alright'}), 200
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+    except Exception as e:
+        logging.error(f"Error updating status: {e}")
+        return f"Error: {e}", 400
+
+
 @app.route('/ielogosanas')
 def ielogosanas():
     return render_template('ielogosanas.html')
@@ -65,7 +77,7 @@ def login():
 def update_status():
     try:
         order_id = request.form.get('id')  # Получаем ID заказа
-        new_status = request.form.get('status')  # Получаем новый статус
+        new_status = (request.form.get('status'))  # Получаем новый статус
 
         # Находим заказ по ID и обновляем его статус
         order = Pasutijums.query.get(order_id)
@@ -90,7 +102,7 @@ def update_status():
 def update_status_waiting():
     try:
         order_id = request.form.get('id')  # Получаем ID заказа
-        vai_gaidija = request.form.get('gaidija_materialus')  # Получаем новый статус
+        vai_gaidija = bool(int(request.form.get('gaidija_materialus')))  # Получаем новый статус
 
         # Находим заказ по ID и обновляем его статус
         order = Pasutijums.query.get(order_id)
