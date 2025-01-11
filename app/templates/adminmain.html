@@ -144,17 +144,6 @@ function nakamais_pasutijums(button) {
         });
 }
 
-    function sanemts(button) {
-        var row = button.closest("tr");
-        var orderId = row.cells[0].textContent;
-        var statusCell = row.cells[7]; 
-        updateStatus(orderId, "Pabeigts");
-        statusCell.textContent = "Pabeigts";
-        button.style.display = "none";
-        var tbody = row.parentElement;
-        tbody.appendChild(row); 
-    }
-
     function sanemts_f(button) {
         var row = button.closest("tr"); // Получаем текущую строку
         var materialStatusCell = row.cells[4]; // Столбец для статуса материала
@@ -194,7 +183,7 @@ function aizsutits(button){
 
     var row = button.closest("tr");
         var orderId = row.cells[0].textContent;
-        var statusCell = row.cells[5]; 
+        var statusCell = row.cells[7]; 
         updateStatus(orderId, "Gaida piegādi");
         statusCell.textContent = "Gaida piegādi";
 
@@ -204,8 +193,8 @@ function aizsutits(button){
 function sanemtsTwo(button) {
         var row = button.closest("tr");
         var orderId = row.cells[0].textContent;
-        var statusCell = row.cells[5]; 
-        updateStatus(orderId, "Pabeigts");
+        var statusCell = row.cells[7]; 
+        // updateStatus(orderId, "Gaida piegādi"); // problema tut 
         statusCell.textContent = "Pabeigts";
         button.style.display = "none";
         var tbody = row.parentElement;
@@ -331,7 +320,15 @@ function sanemtsTwo(button) {
                         <td>
                             <button class="button_mater" onclick="aizsutits(this)">Aizsūtīts</button>
                         </td>
-                        <td id="kopejais_stat">Nav nosūtīts</td>
+                        <td id="kopejais_stat"> 
+                            {% if wait_del.sanemsanas_statuss == 'Aizsūtīts' %}
+                            Gaida piegādi
+                            {% elif wait_del.sanemsanas_statuss == 'Saņemts' %}
+                            Pabeigts
+                            {% else %}
+                            Nav nosūtīts
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
