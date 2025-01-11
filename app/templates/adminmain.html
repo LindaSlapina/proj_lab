@@ -99,8 +99,9 @@
     
 function nakamais_pasutijums(button) {
     var orderId = button.getAttribute("data-id"); // Получаем ID заказа из data-id
+    var orderIdS = parseInt(button.getAttribute("data-id")) + 1;
     if (!orderId) {
-        console.error("ID заказа не найден!");
+        console.error("ID nav atrasts");
         return;
     }
 
@@ -117,9 +118,10 @@ function nakamais_pasutijums(button) {
     });
 
     if (!row) {
-        console.error("Строка таблицы с ID " + orderId + " не найдена!");
+        console.error("ID" + orderId + "nav atrasta");
         return;
     }
+
 
     var materialStatusCell = row.cells[4]; // Столбец "Материальный статус"
     var overallStatusCell = row.cells[5]; // Столбец "Общий статус"
@@ -130,13 +132,15 @@ function nakamais_pasutijums(button) {
             materialStatusCell.textContent = "Gaida piegādi";
             overallStatusCell.textContent = "Gaida piegādi";
             button.disabled = true;
-            button.textContent = "Статус обновлён";
 
             location.reload();
+
         })
+        
+        
         .catch(error => {
-            console.error("Ошибка обновления статуса:", error);
-            alert("Не удалось обновить статус заказа!");
+            console.error("Kļūda", error);
+            alert("Neatjauninājās statuss ");
         });
 }
 
@@ -244,7 +248,7 @@ function nakamais_pasutijums(button) {
                         <td>{{ order.id }}</td>
                         <td>{{ order.izmers }}</td>
                         <td>{{ order.daudzums }} gab</td>
-                        <td>{{ order.komentari or "Nav piezīmju" }}</td>
+                        <td>{{ order.komentari or "Nav piezīmju" }}</td> 
                         <td>
                             {% if order.materiala_statuss == 'Ir pieejams' %}
                             Ir pieejams
@@ -257,7 +261,9 @@ function nakamais_pasutijums(button) {
                             {% endif %}
                         </td>
                         <td id="kopejais_stat">
-                            {% if order.materiala_statuss == 'Ir pieejams' %}
+                            {% if order.id ==  available_order.id %}
+                                Printējas
+                            {% elif order.materiala_statuss == 'Ir pieejams' %}
                                 Gaida rindā
                             {% elif order.materiala_statuss == 'Pasūtīts' %}
                                 Gaida materiālu piegādi
