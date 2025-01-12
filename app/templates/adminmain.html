@@ -72,6 +72,7 @@ function prioritizetPasutijumus() {
     // Обновляем статус в базе данных через сервер
     updateStatus(orderId, "Ir pieejams");
     updateStatusWaiting(orderId, "0");
+    updateFullStatus(orderId, "Gaida rindā");
 
     // Скрываем кнопки
     var buttons = row.getElementsByClassName('button_mater');
@@ -93,6 +94,7 @@ function prioritizetPasutijumus() {
 
         // Обновляем статус в базе данных через сервер
         updateStatus(orderId, "Pasūtīts");
+        updateFullStatus(orderId, "Gaida materiālus");
     
         // Скрываем кнопки
         var buttons = row.getElementsByClassName('button_mater');
@@ -111,6 +113,7 @@ function prioritizetPasutijumus() {
         receivedButton.onclick = function () {
             updateStatus(orderId, "Ir pieejams");  // Обновляем статус в базе
             updateStatusWaiting(orderId, "1");
+            updateFullStatus(orderId, "Gaida rindā");
             // Обновляем статус при нажатии на "Saņemts"
             materialStatusCell.textContent = "Ir pieejams";
             overallStatusCell.textContent = "Gaida rindā";
@@ -165,7 +168,7 @@ function nakamais_pasutijums(button) {
 
 
     // Обновляем статус на сервере
-    updateStatus(orderId, "Gaida piegādi") //Printēšana pabeigta
+    updateFullStatus(orderId, "Printēšana pabeigta") //Printēšana pabeigta
         .then(() => {
             materialStatusCell.textContent = "Gaida piegādi";
             overallStatusCell.textContent = "Gaida piegādi";
@@ -189,6 +192,7 @@ function nakamais_pasutijums(button) {
         var orderId = row.cells[0].textContent; // Получаем ID заказа
         updateStatus(orderId, "Ir pieejams");  // Обновляем статус в базе
         updateStatusWaiting(orderId, "1");
+        updateFullStatus(orderId, "Gaida rindā");
             // Обновляем статус при нажатии на "Saņemts"
             materialStatusCell.textContent = "Ir pieejams";
             overallStatusCell.textContent = "Gaida rindā";
