@@ -40,6 +40,18 @@ function updateStatusWaiting(orderId, vaiGaidija) {
     });
 }
 
+function updateFullStatus(orderId, kopejaisStatuss) {
+    return fetch('/update_full_status', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `id=${orderId}&kopejaisSatuss=${kopejaisStatuss}`
+    }).then(response => {
+        return response.json(); // Возвращаем данные, если нужно
+    });
+}
+
 function prioritizetPasutijumus() {
     return fetch('/prioritizet', {
         method: 'POST',
@@ -153,7 +165,7 @@ function nakamais_pasutijums(button) {
 
 
     // Обновляем статус на сервере
-    updateStatus(orderId, "Gaida piegādi")
+    updateStatus(orderId, "Gaida piegādi") //Printēšana pabeigta
         .then(() => {
             materialStatusCell.textContent = "Gaida piegādi";
             overallStatusCell.textContent = "Gaida piegādi";
@@ -211,7 +223,7 @@ function aizsutits(button){
     var row = button.closest("tr");
         var orderId = row.cells[0].textContent;
         var statusCell = row.cells[7]; 
-        updateStatus(orderId, "Gaida piegādi");
+        updateFullStatus(orderId, "Aizsūtīts");
         statusCell.textContent = "Gaida piegādi";
 
         button.textContent = "Saņemts";
@@ -221,7 +233,7 @@ function sanemtsTwo(button) {
         var row = button.closest("tr");
         var orderId = row.cells[0].textContent;
         var statusCell = row.cells[7]; 
-        // updateStatus(orderId, "Gaida piegādi"); // problema tut 
+        updateFullStatus(orderId, "Pabeigts");
         statusCell.textContent = "Pabeigts";
         button.style.display = "none";
         var tbody = row.parentElement;
@@ -345,12 +357,16 @@ function sanemtsTwo(button) {
                         <td>{{ wait_del.TelefonaNumurs }}</td>
                         <td>{{ wait_del.PiegadesAdrese }}</td>
                         <td>
+                            {% if wait_del.kopejais_statuss == 'Aizsūtīts' %}
+                            <button class="button_mater" onclick="sanemtsTwo(this)">Saņemts</button>
+                            {% elif wait_del.kopejais_statuss != 'Pabeigts'%}
                             <button class="button_mater" onclick="aizsutits(this)">Aizsūtīts</button>
+                            {% endif %}
                         </td>
                         <td id="kopejais_stat"> 
-                            {% if wait_del.sanemsanas_statuss == 'Aizsūtīts' %}
+                            {% if wait_del.kopejais_statuss == 'Aizsūtīts' %}
                             Gaida piegādi
-                            {% elif wait_del.sanemsanas_statuss == 'Saņemts' %}
+                            {% elif wait_del.kopejais_statuss == 'Pabeigts' %}
                             Pabeigts
                             {% else %}
                             Nav nosūtīts

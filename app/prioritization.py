@@ -45,7 +45,7 @@ def queue_priority_calculation(orders):
                 print(vieta)
             
             # db.session.commit()  # Сохраняем все изменения в базе данных
-
+        
         return "Orders processed successfully"
     except Exception as e:
         # db.session.rollback()  # Откатываем изменения в случае ошибки
