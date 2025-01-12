@@ -121,4 +121,4 @@ BEGIN MAIN_PROGRAM
 END MAIN_PROGRAM
 
 ## Plakāts
-![](projektesanas_plakats.png)
+![](projektesana_plakats.png)
