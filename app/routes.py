@@ -191,7 +191,7 @@ def submit():
         materiala_statuss='Nav zināms'
         kopejais_statuss = ''
         darba_apjoms = work_volume_calculation(izmers, int(daudzums))
-        vieta_rinda = 0
+        vieta_rinda = -1
         gaidija_materialus = None
 
         # Сохранение файла
