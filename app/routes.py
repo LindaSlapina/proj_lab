@@ -52,14 +52,16 @@ def adminmain():
     # all_orders = Pasutijums.query.filter(Pasutijums.materiala_statuss.isnot('Gaida piegādi')).all()
     all_orders = (
     Pasutijums.query
-    .filter(or_(
-        Pasutijums.kopejais_statuss == 'Gaida rindā',
-        Pasutijums.kopejais_statuss == 'Gaida materiālus',
-        Pasutijums.kopejais_statuss == '',
-    ))  # Фильтруем заказы
-    .order_by(desc(Pasutijums.vieta_rinda))  # Сортируем по убыванию поля vieta_rinda
-    .all()  # Получаем все результаты
+        .filter(or_(
+            Pasutijums.kopejais_statuss == 'Gaida rindā',
+            Pasutijums.kopejais_statuss == 'Gaida materiālus',
+            Pasutijums.kopejais_statuss == '',
+            Pasutijums.kopejais_statuss.is_(None),
+        ))
+        .order_by(desc(Pasutijums.vieta_rinda))
+        .all()
 )
+
     available_order = Pasutijums.query.filter_by(kopejais_statuss='Gaida rindā') \
     .order_by(desc(Pasutijums.vieta_rinda)) \
     .first()
@@ -187,6 +189,7 @@ def submit():
         komentari = request.form['komentari']
         faila_aug = request.files['faila_aug']
         materiala_statuss='Nav zināms'
+        kopejais_statuss = ''
         darba_apjoms = work_volume_calculation(izmers, int(daudzums))
         vieta_rinda = 0
         gaidija_materialus = None
@@ -209,6 +212,7 @@ def submit():
             komentari=komentari,
             FailaAugšupielāde=filename,  # Убедитесь, что используете правильное имя колонки
             materiala_statuss=materiala_statuss,
+            kopejais_statuss=kopejais_statuss,
             darba_apjoms=darba_apjoms,
             vieta_rinda=vieta_rinda,
             gaidija_materialus=gaidija_materialus

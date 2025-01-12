@@ -40,7 +40,7 @@ def queue_priority_calculation(orders):
             if materiala_statuss != 'Ir pieejams':
                 order.vieta_rinda = -1
             else:
-                vieta = round((darba_apjoms**(-1) * (gaidisanas_laiks + 1))*1000, 2)
+                vieta = round((darba_apjoms**(-1) * (gaidisanas_laiks))*1000, 2)
                 order.vieta_rinda = vieta
                 print(vieta)
             
