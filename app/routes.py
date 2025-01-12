@@ -3,7 +3,7 @@ from app.prioritization import *
 
 from app import app, db
 from app.model import Pasutijums, Darbinieki
-from sqlalchemy import not_
+from sqlalchemy import not_, desc
 import os
 import logging
 UPLOAD_FOLDER = 'uploads'
@@ -27,7 +27,6 @@ def prioritizet():
         if orders:
             queue_priority_calculation(orders)
             db.session.commit()
-            print("1")
             return jsonify({'success': True, 'message': 'Status updated successfully'})
         else:
             return jsonify({'success': False, 'message': 'Order not found'}), 404
@@ -43,13 +42,20 @@ def prioritizet():
         db.session.close()
 
 
+
 @app.route('/ielogosanas')
 def ielogosanas():
     return render_template('ielogosanas.html')
 
 @app.route('/adminmain')
 def adminmain():
-    all_orders = Pasutijums.query.filter(Pasutijums.materiala_statuss.isnot('Gaida piegādi')).all()
+    # all_orders = Pasutijums.query.filter(Pasutijums.materiala_statuss.isnot('Gaida piegādi')).all()
+    all_orders = (
+    Pasutijums.query
+    .filter(Pasutijums.materiala_statuss.isnot('Gaida piegādi'))  # Фильтруем заказы
+    .order_by(desc(Pasutijums.vieta_rinda))  # Сортируем по убыванию поля vieta_rinda
+    .all()  # Получаем все результаты
+)
     available_order = (
         Pasutijums.query.filter_by(materiala_statuss='Ir pieejams').first()
     )
@@ -94,6 +100,29 @@ def update_status():
         order = Pasutijums.query.get(order_id)
         if order:
             order.materiala_statuss = new_status
+            db.session.commit()
+            return jsonify({'success': True, 'message': 'Status updated successfully'})
+        else:
+            return jsonify({'success': False, 'message': 'Order not found'}), 404
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error updating status: {e}")
+        return f"Error: {e}", 400
+
+    finally:
+        db.session.close()
+
+@app.route('/update_full_status', methods=['POST'])
+def update_full_status():
+    try:
+        order_id = request.form.get('id')  # Получаем ID заказа
+        new_full_status = request.form.get('kopejaisSatuss')  # Получаем новый статус
+        order = Pasutijums.query.get(order_id)
+        if order:
+            order.kopejais_statuss = new_full_status
             db.session.commit()
             return jsonify({'success': True, 'message': 'Status updated successfully'})
         else:
