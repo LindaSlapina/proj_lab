@@ -120,3 +120,5 @@ BEGIN MAIN_PROGRAM
 
 END MAIN_PROGRAM
 
+## Plakāts
+![](projektesana_plakats.png)
