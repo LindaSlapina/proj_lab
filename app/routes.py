@@ -3,7 +3,7 @@ from app.prioritization import *
 
 from app import app, db
 from app.model import Pasutijums, Darbinieki
-from sqlalchemy import not_, desc
+from sqlalchemy import not_, desc, or_
 import os
 import logging
 UPLOAD_FOLDER = 'uploads'
@@ -52,14 +52,25 @@ def adminmain():
     # all_orders = Pasutijums.query.filter(Pasutijums.materiala_statuss.isnot('Gaida piegādi')).all()
     all_orders = (
     Pasutijums.query
-    .filter(Pasutijums.materiala_statuss.isnot('Gaida piegādi'))  # Фильтруем заказы
+    .filter(or_(
+        Pasutijums.kopejais_statuss == 'Gaida rindā',
+        Pasutijums.kopejais_statuss == 'Gaida materiālus',
+        Pasutijums.kopejais_statuss == '',
+    ))  # Фильтруем заказы
     .order_by(desc(Pasutijums.vieta_rinda))  # Сортируем по убыванию поля vieta_rinda
     .all()  # Получаем все результаты
 )
-    available_order = (
-        Pasutijums.query.filter_by(materiala_statuss='Ir pieejams').first()
-    )
-    wait_del = Pasutijums.query.filter_by(materiala_statuss='Gaida piegādi')
+    available_order = Pasutijums.query.filter_by(kopejais_statuss='Gaida rindā') \
+    .order_by(desc(Pasutijums.vieta_rinda)) \
+    .first()
+    wait_del = (
+        Pasutijums.query
+        .filter(or_(
+        Pasutijums.kopejais_statuss == 'Printēšana pabeigta',
+        Pasutijums.kopejais_statuss == 'Aizsūtīts',
+        Pasutijums.kopejais_statuss == 'Pabeigts',
+    ))
+    ).all()
     return render_template(
         'adminmain.html',
         orders=all_orders,
