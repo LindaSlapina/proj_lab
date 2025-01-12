@@ -23,13 +23,24 @@ def kontaktinfo():
 @app.route('/prioritizet', methods=['POST'])
 def prioritizet():
     try:
-        queue_priority_calculation()
-        return jsonify({'success': True, 'message': 'Alright'}), 200
+        orders = Pasutijums.query.all()
+        if orders:
+            queue_priority_calculation(orders)
+            db.session.commit()
+            print("1")
+            return jsonify({'success': True, 'message': 'Status updated successfully'})
+        else:
+            return jsonify({'success': False, 'message': 'Order not found'}), 404
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
+
     except Exception as e:
+        db.session.rollback()
         logging.error(f"Error updating status: {e}")
         return f"Error: {e}", 400
+
+    finally:
+        db.session.close()
 
 
 @app.route('/ielogosanas')
